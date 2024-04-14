@@ -1,8 +1,13 @@
 import selenium
+import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from time import sleep
+
+membership_data = "Membership.xlsx"
+df = pd.read_excel(membership_data)
+
 
 
 driver = webdriver.Edge()     #"/Users/omsai/Downloads"/chromedriver_mac_arm64
