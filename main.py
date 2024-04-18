@@ -88,9 +88,10 @@ for i in range(len(branches)):
     search_box = driver.find_element(By.ID,"universityFilter")
     search_box.send_keys("BMS")
     
-    WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.ID,"schoolCol1")))
 
-    bmsit = driver.find_element(By.ID,"schoolCol1")
+    sleep(2)
+
+    bmsit = driver.find_element(By.LINK_TEXT,"BMS Institute of Technology")
     bmsit.click()
 
     undergrad = driver.find_element(By.ID,"studentStatusUndergraduate Student")
@@ -110,8 +111,9 @@ for i in range(len(branches)):
 
     grad_year = driver.find_element(By.ID,"estimated-grad-year")
     select_year = Select(grad_year)
-    print(grad_years[i])
-    select_year.select_by_visible_text(grad_years[i])
+    print(str(grad_years[i]))
+    print(str(int(grad_years[i])))
+    select_year.select_by_visible_text(str(int(grad_years[i])))
 
     field_of_study = driver.find_element(By.ID,"stud-current-study")
     select_field_of_study = Select(field_of_study)
@@ -128,19 +130,38 @@ for i in range(len(branches)):
     mem_dir = driver.find_element(By.ID,"memberdir-options1")
     mem_dir.click()
 
-    join_puspose = driver.find_element(By.ID,"additional-info")
-    check_boxes = join_puspose.find_element(By.ID,".//input[@type='checkbox']")
+    input()
+
+    # join_puspose = driver.find_element(By.ID,"additional-info")
+    # check_boxes = join_puspose.find_element(By.ID,".//input[@type='checkbox']")
     
-    for check_box in check_boxes[:-1]:
-        check_box.click()
+    # for check_box in check_boxes[:-1]:
+    #     check_box.click()
+
+    c1 = driver.find_element(By.ID,"TechnicallyCurrent")
+    c1.click()
+    c2 = driver.find_element(By.ID,"CareerOpurtunities")
+    c2.click()
+    c3 = driver.find_element(By.ID,"ExpandProfessionalNetwork")
+    c3.click()
+    c4 = driver.find_element(By.ID,"ConnectToLocalActivities")
+    c4.click()
+    c5 = driver.find_element(By.ID,"HumanitarianPrograms")
+    c5.click()
+    c6 = driver.find_element(By.ID,"Discounts")
+    c6.click()
 
     referral = driver.find_element(By.ID,"member-referral")
     select_referral = Select(referral)
     select_referral.select_by_visible_text("Member referral")
 
-    # continue_button.click()
+    sleep(2)
 
-    input()
+    continue_button_2 = driver.find_element(By.XPATH,"/html/body/div[6]/div[4]/div[1]/div[2]/div[3]/div/div[1]/div/div/div/div/div[6]/input")
+    continue_button_2.click()
+
+    # WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.LINK_TEXT,"Society Memberships")))
+    sleep(3)
 
     society_memberships = driver.find_element(By.LINK_TEXT,"Society Memberships")
     society_memberships.click()
