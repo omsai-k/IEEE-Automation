@@ -17,6 +17,7 @@ df = pd.read_excel(membership_data)
 # emails = df["Email"].tolist()
 branches = df["Branch"].tolist()
 grad_years = df["YEAR OF GRADUATION"].tolist()
+gender = df["GENDER"].tolist()
 
 
 full_forms = {
@@ -41,54 +42,53 @@ join_as_student.click()
 
 
 for i in range(len(branches)):
-    # input("Press ENTER/RETURN after creating an account or logging in to an existing account")
-    WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.XPATH,"/html/body/div/div[1]/div[2]/div[4]/div/div[2]/form/div[1]/input")))
-    u_name = driver.find_element(By.XPATH,"/html/body/div/div[1]/div[2]/div[4]/div/div[2]/form/div[1]/input")
-    u_name.send_keys("omsaikongara7@gmail.com")
-    
-    p_word = driver.find_element(By.XPATH,"/html/body/div/div[1]/div[2]/div[4]/div/div[2]/form/div[2]/input")
-    p_word.send_keys("Omsai@4444")
+    try:
+        WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.ID,"organization-name")))
+        sleep(3)
 
-    login = driver.find_element(By.ID,"ppctLoginSubmit")
-    login.click()
-    
-    input()
+        phone_type = driver.find_element(By.ID,"add-telephone-type")
+        select_phone_type = Select(phone_type)
+        select_phone_type.select_by_visible_text("Work or School")
 
-    WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.ID,"organization-name")))
-    sleep(3)
-    dept_name = driver.find_element(By.ID,"organization-name")
-    dept_name.send_keys("BMSIT")
-    
-    checkbox_1 = driver.find_element(By.ID,"contact-info_customer_addresses_0__addressType_code-3")
-    checkbox_1.click()
+        dept_name = driver.find_element(By.ID,"organization-name")
+        dept_name.send_keys("BMSIT")
+        
+        checkbox_1 = driver.find_element(By.ID,"contact-info_customer_addresses_0__addressType_code-3")
+        checkbox_1.click()
 
-    address_1 = driver.find_element(By.ID,"address-line1")
-    address_1.send_keys("Doddaballapur Main Road,Avalahalli")
+        address_1 = driver.find_element(By.ID,"address-line1")
+        address_1.send_keys("Doddaballapur Main Road,Avalahalli")
 
-    address_2 = driver.find_element(By.ID,"address-line2")
-    address_2.send_keys("Yelahanka, Bengaluru, Karnataka 560064")
+        address_2 = driver.find_element(By.ID,"address-line2")
+        address_2.send_keys("Yelahanka, Bengaluru, Karnataka 560064")
 
-    city = driver.find_element(By.ID,"city")
-    city.send_keys("Bengaluru")
+        city = driver.find_element(By.ID,"city")
+        city.send_keys("Bengaluru")
 
-    dropdown = driver.find_element(By.ID,"province")
-    select_state = Select(dropdown)
-    select_state.select_by_visible_text("Karnataka")
+        dropdown = driver.find_element(By.ID,"province")
+        select_state = Select(dropdown)
+        select_state.select_by_visible_text("Karnataka")
 
-    pin_code = driver.find_element(By.ID,"postal-code")
-    pin_code.send_keys("560064")
+        pin_code = driver.find_element(By.ID,"postal-code")
+        pin_code.send_keys("560064")
 
-    telephone = driver.find_element(By.ID,"mobile-number")
-    telephone.send_keys("+917760735073")
+        telephone = driver.find_element(By.ID,"telephone-number")
+        telephone.send_keys("+917760735073")
 
-    # continue_button = driver.find_element(By.XPATH,"/html/body/div[6]/div[4]/div[1]/div[2]/div[3]/div/div[1]/div/div/div/div/div[6]/input")
+        sleep(1)
 
-    WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.ID,"mc-pr-checkout-sec")))
-    
-    continue_button = driver.find_element(By.ID,"mc-pr-checkout-sec")
+        continue_button = driver.find_element(By.XPATH,"/html/body/div[6]/div[4]/div[1]/div[1]/div[2]/div[5]/div[2]/div/div/div[2]/div/div[6]/div/div[2]/div/input")
+        continue_button.click()
+        WebDriverWait(driver,timeout).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[6]/div[4]/div[1]/div[1]/div[2]/div[5]/div[2]/div/div/div[2]/div/div[6]/div/div[2]/div/input")))
+        continue_button.click()
+
+    except Exception as e:
+        print(f"{e} or details are already filled")
+
+    continue_button = driver.find_element(By.XPATH,"/html/body/div[6]/div[4]/div[1]/div[1]/div[2]/div[5]/div[2]/div/div/div[2]/div/div[6]/div/div[2]/div/input")
     continue_button.click()
 
-    sleep(5)
+    WebDriverWait(driver,timeout).until(EC.element_to_be_clickable((By.ID,"searchUniversity")))
 
     search_college = driver.find_element(By.ID,"searchUniversity")
     search_college.click()
@@ -98,7 +98,6 @@ for i in range(len(branches)):
     search_box = driver.find_element(By.ID,"universityFilter")
     search_box.send_keys("BMS")
     
-
     sleep(2)
 
     bmsit = driver.find_element(By.LINK_TEXT,"BMS Institute of Technology")
@@ -138,15 +137,7 @@ for i in range(len(branches)):
     mem_dir = driver.find_element(By.ID,"memberdir-options1")
     mem_dir.click()
 
-    
-
-    # join_puspose = driver.find_element(By.ID,"additional-info")
-    # check_boxes = join_puspose.find_element(By.ID,".//input[@type='checkbox']")
-    
-    # for check_box in check_boxes[:-1]:
-    #     check_box.click()
-
-    """c1 = driver.find_element(By.ID,"TechnicallyCurrent")
+    c1 = driver.find_element(By.ID,"TechnicallyCurrent")
     c1.click()
     c2 = driver.find_element(By.ID,"CareerOpurtunities")
     c2.click()
@@ -157,7 +148,7 @@ for i in range(len(branches)):
     c5 = driver.find_element(By.ID,"HumanitarianPrograms")
     c5.click()
     c6 = driver.find_element(By.ID,"Discounts")
-    c6.click()"""
+    c6.click()
 
     referral = driver.find_element(By.ID,"member-referral")
     select_referral = Select(referral)
@@ -168,8 +159,7 @@ for i in range(len(branches)):
     continue_button_2 = driver.find_element(By.XPATH,"/html/body/div[6]/div[4]/div[1]/div[2]/div[3]/div/div[1]/div/div/div/div/div[6]/input")
     continue_button_2.click()
 
-    # WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.LINK_TEXT,"Society Memberships")))
-    sleep(3)
+    WebDriverWait(driver,timeout).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[5]/div[2]/div/div/div[2]/div/div")))
 
     society_memberships = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[5]/div[2]/div/div/div[2]/div/div")
     society_memberships.click()
@@ -178,7 +168,7 @@ for i in range(len(branches)):
 
     comp_society = driver.find_element(By.LINK_TEXT,"IEEE Computer Society Membership")
     comp_society.click()
-    input()
+
     sleep(3)
 
     add_items = driver.find_element(By.ID,"add-product-button-id")
@@ -202,7 +192,7 @@ for i in range(len(branches)):
 
     WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div[4]/div/div[6]/div[2]/p[1]/a")))
 
-    info_theory = driver.find_element(By.XPATH("/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div[4]/div/div[6]/div[1]/a/img"))
+    info_theory = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div[4]/div/div[6]/div[1]/a/img")
     info_theory.click()
 
     sleep(1)
@@ -212,8 +202,8 @@ for i in range(len(branches)):
     select_dropdown.select_by_visible_text("Essential")
 
     sleep(1)
-    # add_items_2 = driver.find_element(By.ID,"add-product-button-id")
-    add_items.click()
+    add_items_2 = driver.find_element(By.ID,"add-product-button-id")
+    add_items_2.click()
 
     sleep(2)
 
@@ -228,14 +218,6 @@ for i in range(len(branches)):
     society_memberships.click()
 
     sleep(2)
-
-    # for _ in range(3):
-    #     driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-        
-    #     sleep(2)
-
-    # signal_processing = driver.find_element(By.LINK_TEXT,"IEEE Signal Processing Society Membership")
-    # signal_processing.click()
 
     search_bar = driver.find_element(By.ID,"searchterms")
     search_bar.send_keys("IEEE Signal Processing Society Membership")
@@ -243,78 +225,66 @@ for i in range(len(branches)):
     search = driver.find_element(By.ID,"btn-ctlg-search")
     search.click()
 
-    WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.LINK_TEXT,"/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div[4]/div/div[4]/div[2]/p[1]/a")))
+    WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div[4]/div/div[4]/div[2]/p[1]/a")))
 
     signal_processing = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div[4]/div/div[4]/div[1]/a/img")
     signal_processing.click()
-
-    # search = driver.find_element(By.ID,"btn-ctlg-search")
-    # search.click()
 
     dropdown_2 = driver.find_element(By.ID,"subscription-media-type")
     select_dropdown = Select(dropdown_2)
     select_dropdown.select_by_visible_text("Essential")
 
     sleep(1)
-    # add_items_2 = driver.find_element(By.ID,"add-product-button-id")
-    add_items.click()
-
-    sleep(2)
-
-    WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.LINK_TEXT,"Catalog")))
-
-    catalog = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[1]/div[1]/h1/a")
-    catalog.click()
-
-    WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[5]/div[2]/div/div/div[2]/div/div")))
-
-    society_memberships = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[5]/div[2]/div/div/div[2]/div/div")
-    society_memberships.click()
-
-    sleep(2)
-
-    WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.ID,"searchterms")))
-
-    search_bar = driver.find_element(By.ID,"searchterms")
-    search_bar.send_keys("women in engineering")
-
-    search = driver.find_element(By.ID,"btn-ctlg-search")
-    search.click()
-
-    WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div[4]/div/div[2]/div[2]/p[1]/a")))
-
-    women_engg = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div[4]/div/div[2]/div[1]/a/img")
-    women_engg.click()
-
-    WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.ID,"addItems")))
-
     add_items_3 = driver.find_element(By.ID,"addItems")
     add_items_3.click()
 
-    WebDriverWait(driver,timeout).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[2]/div[2]/div[1]/div/div/div/div[6]/input")))
+    if(gender[i]=="FEMALE"):
 
-    continue_button_3 = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[2]/div[2]/div[1]/div/div/div/div[6]/input")
-    continue_button_3.click()
+        WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.LINK_TEXT,"Catalog")))
 
-    WebDriverWait(driver,timeout).until(EC.element_to_be_clickable((By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div/div/div[2]/div[5]/div/input")))
+        catalog = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[1]/div[1]/h1/a")
+        catalog.click()
 
-    continue_button_4 = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div/div/div[2]/div[5]/div/input")
-    continue_button_4.click()
+        WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[5]/div[2]/div/div/div[2]/div/div")))
 
-    WebDriverWait(driver,timeout).until(EC.element_to_be_clickable((By.ID,"op-challanpay")))
+        society_memberships = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[5]/div[2]/div/div/div[2]/div/div")
+        society_memberships.click()
 
-    challan = driver.find_element(By.ID,"op-challanpay")
-    challan.click()
+        sleep(2)
 
-    continue_button_5 = driver.find_element(By.ID,"continuePageBtn")
-    continue_button_5.click()
+        WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.ID,"searchterms")))
 
-    WebDriverWait(driver,timeout).until(EC.element_to_be_clickable((By.ID,"terms-conditions")))
+        search_bar = driver.find_element(By.ID,"searchterms")
+        search_bar.send_keys("women in engineering")
 
-    terms_n_conds = driver.find_element(By.ID,"terms-conditions")
-    terms_n_conds.click()
+        search = driver.find_element(By.ID,"btn-ctlg-search")
+        search.click()
 
-    mem_conds = driver.find_element(By.ID,"membership-terms-conditions")
-    mem_conds.click()
+        WebDriverWait(driver,timeout).until(EC.presence_of_element_located((By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div[4]/div/div[2]/div[2]/p[1]/a")))
 
+        women_engg = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[1]/div[3]/div[4]/div/div[2]/div[1]/a/img")
+        women_engg.click()
+
+        WebDriverWait(driver,timeout).until(EC.element_to_be_clickable((By.ID,"addItems")))
+
+        add_items_3 = driver.find_element(By.ID,"addItems")
+        add_items_3.click()
+
+        sleep(5)
+        WebDriverWait(driver,timeout).until(EC.element_to_be_clickable((By.ID,"mc-pr-checkout-sec")))
+
+        continue_button_3 = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[2]/div[2]/div[1]/div/div/div/div[6]/input")
+        continue_button_3.click()
+
+
+    else:
+
+        WebDriverWait(driver,timeout).until(EC.element_to_be_clickable((By.ID,"mc-pr-checkout-sec")))
+       
+        continue_button_5 = driver.find_element(By.XPATH,"/html/body/div[4]/div[4]/div[1]/div[2]/div[2]/div[1]/div/div/div/div[6]/input")
+        continue_button_5.click()
+
+
+    
     i = i+1
+    input("Complete the buying process, Login to next account and press Enter to continue")
